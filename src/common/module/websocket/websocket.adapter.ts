@@ -1,0 +1,11 @@
+import { IoAdapter } from '@nestjs/platform-socket.io'
+import { ServerOptions } from 'socket.io';
+import * as redisIoAdapter from 'socket.io-redis';
+
+export class WebsocketAdapter extends IoAdapter {
+  createIOServer(port: number, options?: ServerOptions): any {
+    const server = super.createIOServer(port, options);
+    server.adapter(redisIoAdapter({ host: process.env.REDIS_HOST, port: +process.env.REDIS_PORT }));
+    return server;
+  }
+}

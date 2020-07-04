@@ -7,6 +7,18 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return this.appService.getHello();
+    // return this.appService.getHello();
+    return ''
   }
+
+  // @Get('/start')
+  // startJob() {
+  //   this.appService.startJob()
+  // }
+
+  // @Get('/stop')
+  // stopJob() {
+  //   this.appService.stopJob()
+  // }
+
 }
