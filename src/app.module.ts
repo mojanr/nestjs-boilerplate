@@ -28,6 +28,8 @@ import { join } from 'path'
 import { AuthModule } from './module/auth/auth.module';
 import { UserModule } from './module/user/user.module';
 import { RoutesModule } from './routes/routes.module';
+import { AccessControlModule } from './shared/access-control/access-control.module';
+import { DiscoveryModule } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -71,6 +73,8 @@ import { RoutesModule } from './routes/routes.module';
     AuthModule,
     UserModule,
     RoutesModule,
+    AccessControlModule,
+    DiscoveryModule
     // DatabaseModule,
     // ScheduleModule,
     // MailModule,

@@ -1,14 +1,20 @@
 import { Injectable, OnApplicationBootstrap, Logger } from '@nestjs/common';
 import { SubscribeMessage, MessageBody, ConnectedSocket } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
+import { DiscoveryService } from '@golevelup/nestjs-discovery'
 // import { SchedulerRegistry, Cron, CronExpression } from '@nestjs/schedule';
 // import { join } from 'path';
 
 @Injectable()
-export class AppService {
+export class AppService implements OnApplicationBootstrap {
 
-  constructor() {
+  constructor(private readonly discover: DiscoveryService) {
+    
+  }
 
+  async onApplicationBootstrap() {
+    // const discovery = await this.discover.controllerMethodsWithMetaAtKey('api')
+    // console.log(discovery)
   }
 
   // onApplicationBootstrap() {

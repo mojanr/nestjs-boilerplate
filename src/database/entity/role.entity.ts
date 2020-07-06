@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Unique, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Unique, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToMany, JoinTable } from "typeorm";
+import { Permission } from "./permission.entity";
 
 @Entity()
 export class Role extends BaseEntity {
@@ -8,32 +9,44 @@ export class Role extends BaseEntity {
 
   @Column()
   name: string
-  
-  @Column()
-  description: string
 
-  @Column()
+  @Column({ nullable: true })
+  attributes: string
+
+  @Column({ nullable: true })
+  description?: string
+
+  @Column({ default: true })
   active: boolean
 
-  @CreateDateColumn()
-  createdAt: Date
+  @ManyToMany(type => Permission)
+  @JoinTable()
+  permissions: Permission[]
 
-  @UpdateDateColumn()
-  updatedAt: Date
-
-  // lock
   public lock() {
-    this.active = false
+    this.active = true
   }
 
   // unlock
   public unlock() {
-    this.active = true
+    this.active = false
   }
 
   // is lock
   public isLock(): boolean {
     return this.active
   }
-  
+
+  public attachPermission(permission: Permission) {
+
+  }
+
+  public detachPermission(permission: Permission) {
+
+  }
+
+  public updatePermission(permission: Permission[]) {
+
+  }
+
 }

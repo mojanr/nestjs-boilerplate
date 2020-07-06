@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Unique, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
-import Crypt from "src/common/util/crypt";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Unique, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToMany, JoinTable } from "typeorm";
+import { Crypt } from "src/common/util/_index.util";
+import { Role } from "./role.entity";
 
 @Entity()
 @Unique(['email'])
@@ -17,11 +18,12 @@ export class User extends BaseEntity {
   @Column()
   password: string
 
-  @Column()
-  salt: string
-
   @Column({ default: true })
   active: boolean
+
+  @ManyToMany(type => Role)
+  @JoinTable()
+  roles: Role[]
 
   // @CreateDateColumn({ default: () => 'CURRENT_TIMESTAMP' })
   // createdAt: Date
@@ -46,15 +48,13 @@ export class User extends BaseEntity {
 
   // set password
   public async setPassword(password: string) {
-    console.log(password)
-    this.salt = await Crypt.generateSalt()
-    this.password = await Crypt.generateHash(password, this.salt)
+    const salt = await Crypt.generateSalt()
+    this.password = await Crypt.generateHash(password, salt)
   }
 
   // validate password
   public async validatePassword(password: string): Promise<boolean> {
-    const hash = await Crypt.generateHash(password, this.salt)
-    return hash === this.password
+    return await Crypt.validate(password, this.password)
   }
 
 }

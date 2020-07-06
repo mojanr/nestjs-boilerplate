@@ -41,9 +41,9 @@ export class ScheduleRepository extends Repository<Schedule> {
     return await schedule.save().catch(({ message }) => { throw new InternalServerErrorException(message) })
   }
 
-  // create new schedule
-  async createSchedule(schedule: Schedule) {
-    await schedule.save()
-  }
+  // // create new schedule
+  // async createSchedule(schedule: Schedule) {
+  //   await schedule.save()
+  // }
 
 }
